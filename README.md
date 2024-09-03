@@ -66,13 +66,13 @@ This API provides endpoints for creating short URLs and retrieving the original 
 1. Pull the Docker image from Docker Hub:
 
     ```bash
-    docker pull zowk52/url-shortener
+    docker pull zowk52/short_url
     ```
 
 2. Run the Docker container:
 
     ```bash
-    docker run -d -p 5000:5000 zowk52/url-shortener
+    docker run -d -p 5000:5000 zowk52/short_url
     ```
 
 3. Access the API:
