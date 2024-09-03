@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify, redirect
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 import random
@@ -6,6 +8,14 @@ import sqlite3
 import string
 
 app = Flask(__name__)
+
+# Use Redis as storage of Rate Limiting
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    storage_uri="memory://",
+    default_limits=["20 per minute"] # Global Rate Limiting
+)
 
 # Initialize SQLite database
 def init_db():
@@ -34,6 +44,7 @@ def is_valid_url(url):
         return False
 
 @app.route('/api/shorten', methods=['POST'])
+@limiter.limit("10 per minute")
 def create_short_url():
     data = request.get_json()
 
