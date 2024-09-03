@@ -9,7 +9,7 @@ import string
 
 app = Flask(__name__)
 
-# Use Redis as storage of Rate Limiting
+# Rate Limiting
 limiter = Limiter(
     get_remote_address,
     app=app,
